@@ -3,187 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Special Surprise for Joy</title>
+  <title>Pour Joy | Une Belle Surprise</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --primary-pink: #ff758c;
-      --soft-white: rgba(255, 255, 255, 0.2);
+      --romantic-gold: #d4af37;
+      --romantic-blush: #fff5f6;
+      --romantic-rose: #e28d9a;
+      --deep-velvet: #2c0e12;
+      --glass: rgba(255, 255, 255, 0.15);
+      --transition-long: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-      color: white;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      background: #000; /* Fallback */
+      background: radial-gradient(circle at center, #4a151b 0%, #1a0507 100%);
+      font-family: 'Inter', sans-serif;
+      color: var(--romantic-blush);
       overflow: hidden;
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px;
+    /* --- Background Atmosphere --- */
+    .dust-particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      pointer-events: none;
+      animation: float-dust linear infinite;
+    }
+
+    @keyframes float-dust {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      50% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+    }
+
+    /* --- The Letter Experience --- */
+    .envelope {
+      position: relative;
       width: 90%;
-      max-width: 500px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      max-width: 550px;
+      perspective: 1000px;
       z-index: 10;
-      animation: fadeIn 1.5s ease-out;
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2px; /* Elegant sharp edges for a premium feel */
+      padding: 4rem 3rem;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      transform-style: preserve-3d;
+      transition: var(--transition-long);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.3); /* Gold inner border */
+      pointer-events: none;
     }
 
     h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #fff, var(--romantic-gold), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
     }
 
-    p {
-      font-size: 1.2em;
-      line-height: 1.6;
+    .message {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
     }
 
-    .btn-container {
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .btn {
-      padding: 12px 30px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 50px;
-      background: white;
-      color: #ff758c;
-      font-weight: bold;
+    /* --- Elegant Interaction --- */
+    .btn-reveal {
+      background: transparent;
+      border: 1px solid var(--romantic-gold);
+      color: var(--romantic-gold);
+      padding: 1rem 2.5rem;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      background: #fff0f3;
+    .btn-reveal:hover {
+      background: var(--romantic-gold);
+      color: var(--deep-velvet);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
     }
 
-    #no-btn {
-      position: absolute;
-      transition: 0.2s;
+    .heart-icon {
+      font-size: 2rem;
+      color: var(--romantic-gold);
+      margin-bottom: 1rem;
+      display: block;
+      animation: pulse 3s infinite;
     }
 
-    .hidden { display: none; }
-
-    .heart {
-      position: fixed;
-      top: -10vh;
-      font-size: 24px;
-      user-select: none;
-      z-index: 1;
-      animation: fall linear infinite;
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
     }
 
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
+    /* --- Surprise Elements --- */
+    #extraContent {
+      display: none;
+      animation: fadeIn 2s ease forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    #quote-box {
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      font-family: 'Playfair Display', serif;
       font-style: italic;
-      margin-top: 20px;
-      color: #fff;
-      min-height: 50px;
+      font-size: 1.1rem;
+      color: var(--romantic-gold);
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .no-btn {
+      position: absolute;
+      transition: all 0.2s ease;
+      border: none;
+      background: none;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+    }
+
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      z-index: 100;
     }
   </style>
 </head>
 <body>
 
-  <div class="glass-card">
-    <h1>Hi Joy ✨</h1>
-    <p id="main-text">I was thinking about you and decided to build this little corner of the internet just for you.</p>
-    
-    <div class="btn-container">
-      <button class="btn" id="reveal-btn" onclick="revealSurprise()">Unlock the Magic 🔒</button>
+  <button class="music-toggle" id="musicBtn">♫ Music Off</button>
+
+  <div class="envelope">
+    <div class="card" id="mainCard">
+      <span class="heart-icon">❦</span>
       
-      <div id="extra-features" class="hidden">
-        <p id="quote-box">"You're the kind of person who makes the sun feel jealous."</p>
-        <button class="btn" onclick="newQuote()">Another reason why you're great 💖</button>
-        <p style="margin-top:20px; font-size: 0.9em;">Are you the coolest person ever?</p>
-        <div style="height: 50px;">
-            <button class="btn" onclick="alert('I knew it! ❤️')">Yes!</button>
-            <button class="btn" id="no-btn" onmouseover="moveNoButton()">No</button>
+      <div id="initialContent">
+        <h1>Chère Joy...</h1>
+        <p class="message">
+          Some moments are meant to be captured in gold.<br>
+          I have a small secret waiting for you.
+        </p>
+        <button class="btn-reveal" id="revealBtn">Ouvrir</button>
+      </div>
+
+      <div id="extraContent">
+        <p class="message" id="quoteText">
+          "Your smile is the most beautiful melody I've ever heard."
+        </p>
+        <div style="margin-top: 2rem;">
+          <p style="font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1rem; opacity: 0.6;">
+            VOUS ÊTES MAGNIFIQUE?
+          </p>
+          <button class="btn-reveal" id="yesBtn" style="margin-right: 10px;">OUI</button>
+          <button class="no-btn" id="noBtn">Non</button>
         </div>
       </div>
     </div>
   </div>
 
-  <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  <div class="toast" id="toast">Une pensée pour toi...</div>
+
+  <audio id="audio" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/02/02/audio_c8c8c8c8c8.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     const quotes = [
-      "Your smile is literally my favorite thing. 😊",
-      "The world is just better with you in it.",
-      "You have a heart of gold, Joy. ✨",
-      "You're smarter and funnier than you give yourself credit for.",
-      "If being awesome was a crime, you'd be doing life. ⚖️",
-      "You're my favorite notification. 📱"
+      "Joy, you make the world feel like a French poem.",
+      "The stars look a little less bright when you laugh.",
+      "In a room full of art, I'd still stare at you.",
+      "Tu es mon plus beau voyage, Joy."
     ];
 
-    function revealSurprise() {
-      document.getElementById('reveal-btn').classList.add('hidden');
-      document.getElementById('extra-features').classList.remove('hidden');
-      document.getElementById('main-text').innerText = "You're truly one of a kind. Here's a little reminder of how special you are:";
-      
-      // Play music (Note: Browsers require user interaction first)
-      const music = document.getElementById('music');
-      music.play().catch(() => console.log("Music blocked by browser policy"));
-      
-      // Start heart rain
-      setInterval(createHeart, 300);
+    const revealBtn = document.getElementById('revealBtn');
+    const initialContent = document.getElementById('initialContent');
+    const extraContent = document.getElementById('extraContent');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const toast = document.getElementById('toast');
+    const audio = document.getElementById('audio');
+    const musicBtn = document.getElementById('musicBtn');
+
+    // --- Interaction Logic ---
+    
+    revealBtn.addEventListener('click', () => {
+      initialContent.style.display = 'none';
+      extraContent.style.display = 'block';
+      audio.play();
+      musicBtn.innerText = "♫ Music On";
+      showToast("Bienvenue dans ton petit coin de bonheur.");
+    });
+
+    yesBtn.addEventListener('click', () => {
+      const nextQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('quoteText').innerText = nextQuote;
+      showToast("Je savais que tu dirais oui. ❤️");
+    });
+
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    musicBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        musicBtn.innerText = "♫ Music On";
+      } else {
+        audio.pause();
+        musicBtn.innerText = "♫ Music Off";
+      }
+    });
+
+    function showToast(msg) {
+      toast.innerText = msg;
+      toast.style.opacity = 1;
+      setTimeout(() => toast.style.opacity = 0, 4000);
     }
 
-    function newQuote() {
-      const qBox = document.getElementById('quote-box');
-      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-      qBox.style.opacity = 0;
-      setTimeout(() => {
-        qBox.innerText = `"${randomQuote}"`;
-        qBox.style.opacity = 1;
-      }, 300);
-    }
-
-    function moveNoButton() {
-      const btn = document.getElementById('no-btn');
-      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
-    }
-
-    function createHeart() {
-      const heart = document.createElement('div');
-      const emojis = ['💖', '✨', '🌸', '💘', '⭐'];
-      heart.classList.add('heart');
-      heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      heart.style.opacity = Math.random();
-      document.body.appendChild(heart);
-
-      setTimeout(() => heart.remove(), 5000);
+    // --- Create Ambient Dust Particles ---
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'dust-particle';
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.top = Math.random() * 100 + 'vh';
+      particle.style.width = particle.style.height = Math.random() * 3 + 'px';
+      particle.style.animationDuration = Math.random() * 5 + 5 + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(particle);
     }
   </script>
 </body>
-</html>
+  </html>
